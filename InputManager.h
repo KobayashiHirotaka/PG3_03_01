@@ -1,28 +1,22 @@
-#pragma once
-#define DIRECTINPUT_VERSION 0x0800//DirectInputのバージョン指定
-#include <dinput.h>
-#pragma comment(lib,"dinput8.lib")
-#pragma comment(lib,"dxguid.lib")
-#include <array>
-#include <wrl.h>
-#include "WinApp.h"
+﻿#pragma once
+#include <Novice.h>
 
 class InputManager
 {
 public:
 	static InputManager* GetInstance();
 	void Update();
-	//押した時
-	bool PushKey(uint8_t keyNumber)const;
-
+	bool GetKey(BYTE keyNumber);
+	bool GetKeyDown(BYTE keyNumber);
 
 private:
-	static InputManager* inputManager_;
+	InputManager() = default;
+	~InputManager() = default;
+	InputManager(const InputManager&) = delete;
+	InputManager& operator=(const InputManager&) = delete;
 
-	Microsoft::WRL::ComPtr<IDirectInput8>directInput_ = nullptr;
-	Microsoft::WRL::ComPtr<IDirectInputDevice8> keyboard_ = nullptr;
-
-	std::array<BYTE, 256> keys_;
-	std::array<BYTE, 256> preKeys_;
+	// キー入力結果を受け取る箱
+	char keys[256] = { 0 };
+	char preKeys[256] = { 0 };
 };
 

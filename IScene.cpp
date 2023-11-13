@@ -9,18 +9,3 @@ IScene::~IScene()
 {
 
 }
-
-void IScene::Initialize()
-{
-
-}
-
-void IScene::Update()
-{
-
-}
-
-void IScene::Draw()
-{
-
-}

@@ -1,5 +1,10 @@
 #pragma once
 #include <Novice.h>
+#include <memory>
+#include <list>
+#include "Vector2.h"
+#include "InputManager.h"
+#include "PlayerBullet.h"
 
 class Player
 {
@@ -10,15 +15,19 @@ public:
 
 	void Draw();
 
-private:
-	int posX_;
-	int posY_;
-	int radius_;
+	Vector2 GetPos() { return pos_; }
+	int GetRadius() { return radius_; }
 
-	int bulletPosX_[10];
-	int bulletPosY_[10];
-	int bulletSpeed_ = 10;
-	int bulletTimer_ = 10;
-	bool isBulletShot_[10];
+	const std::list<std::unique_ptr<PlayerBullet>>& GetBullets() { return bullets_; }
+
+private:
+	InputManager* inputManager_ = nullptr;
+
+	Vector2 pos_;
+	int radius_;
+	int speed_;
+
+	std::list<std::unique_ptr<PlayerBullet>> bullets_;
+	int bulletTimer_;
 };
 

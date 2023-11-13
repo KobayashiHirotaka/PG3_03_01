@@ -2,42 +2,70 @@
 
 void Player::Initialize()
 {
-	posX_ = 640;
-	posY_ = 560;
+	inputManager_ = InputManager::GetInstance();
+
+	pos_.x = 640.0f;
+	pos_.y = 560.0f;
 	radius_ = 50;
+	speed_ = 5;
 }
 
 void Player::Update()
 {
-	/*bulletTimer_--;
-	for (int i = 0; i < 10; i++)
-	{
-		if (keys[DIK_SPACE] && isBulletShot_[i] == 0 && bulletTimer_ <= 0)
+	bullets_.remove_if([](std::unique_ptr<PlayerBullet>& bullet) {
+		if (bullet->GetIsDead())
 		{
-			isBulletShot_[i] = 1;
-			bulletPosX_[i] = posX_;
-			bulletPosY_[i] = posY_;
-			bulletTimer_ = 10;
-			break;
+			bullet.reset();
+			return true;
+		}
+		return false;
+		});
+
+	if (inputManager_->GetKey(DIK_A))
+	{
+		pos_.x -= speed_;
+	}
+
+	if (inputManager_->GetKey(DIK_D))
+	{
+		pos_.x += speed_;
+	}
+
+	if (pos_.x <= 55.0f)
+	{
+		pos_.x = 55.0f;
+	}
+
+	if (pos_.x >= 1225.0f)
+	{
+		pos_.x = 1225.0f;
+	}
+
+	const int kShotInterval = 10;
+
+	if (inputManager_->GetKey(DIK_SPACE))
+	{
+		if (--bulletTimer_ < 0.0f) 
+		{
+			bulletTimer_ = kShotInterval;
+			PlayerBullet* newBullet = new PlayerBullet();
+			newBullet->Initialize({ pos_.x,pos_.y });
+			bullets_.push_back(std::unique_ptr<PlayerBullet>(newBullet));
 		}
 	}
 
-
-	for (int i = 0; i < 10; i++)
+	for (std::unique_ptr<PlayerBullet>& bullet : bullets_)
 	{
-		if (isBulletShot_[i] == 1)
-		{
-			bulletPosY_[i] -= bulletSpeed_;
-		}
-
-		if (bulletPosY_[i] <= -50)
-		{
-			isBulletShot_[i] = 0;
-		}
-	}*/
+		bullet->Update();
+	}
 }
 
 void Player::Draw()
 {
-	Novice::DrawEllipse(posX_, posY_, radius_, radius_, 0.0f, WHITE, kFillModeSolid);
+	for (std::unique_ptr<PlayerBullet>& bullet : bullets_)
+	{
+		bullet->Draw();
+	}
+
+	Novice::DrawEllipse((int)pos_.x, (int)pos_.y, radius_, radius_, 0.0f, WHITE, kFillModeSolid);
 }

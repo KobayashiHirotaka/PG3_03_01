@@ -1,15 +1,29 @@
 #include "GameTitleScene.h"
 
-void GameTitleScene::Initialize()
+GameTitleScene::GameTitleScene()
 {
 
 }
 
+GameTitleScene::~GameTitleScene()
+{
+
+}
+
+void GameTitleScene::Initialize()
+{
+	inputManager_ = InputManager::GetInstance();
+}
+
 void GameTitleScene::Update()
 {
-	ImGui::Begin("SceneNum");
-	ImGui::Text("Title : SceneNum %d", sceneNum);
-	ImGui::InputInt("SceneNum", &sceneNum);
+	if (inputManager_->GetKeyDown(DIK_RETURN))
+	{
+		sceneNum = 1;
+	}
+
+	ImGui::Begin("TitleScene");
+	ImGui::Text("ENTER : STAGESCENE");
 	ImGui::End();
 }
 

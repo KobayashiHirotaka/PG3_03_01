@@ -1,5 +1,6 @@
 #pragma once
 #include <Novice.h>
+#include "Vector2.h"
 
 class Enemy
 {
@@ -10,9 +11,11 @@ public:
 
 	void Draw();
 
+	Vector2 GetPos() { return pos_; }
+	int GetRadius() { return radius_; }
+
 private:
-	int posX_;
-	int posY_;
+	Vector2 pos_;
 	int radius_;
 	int speed_;
 };

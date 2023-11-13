@@ -1,4 +1,4 @@
-#include "InputManager.h"
+﻿#include "InputManager.h"
 #include <cassert>
 
 InputManager* InputManager::GetInstance()
@@ -9,22 +9,25 @@ InputManager* InputManager::GetInstance()
 
 void InputManager::Update()
 {
-	preKeys_ = keys_;
-	//キーボード情報の取得開始
-	keyboard_->Acquire();
-	keys_ = {};
-	//全てのキーの入力状態を取得する
-	keyboard_->GetDeviceState(sizeof(keys_), &keys_);
+	// キー入力を受け取る
+	memcpy(preKeys, keys, 256);
+	Novice::GetHitKeyStateAll(keys);
 }
 
-//bool InputManager::PushKey(uint8_t keyNumber)
-//{
-//	if (!keys_[keyNumber] && preKeys_[keyNumber])
-//	{
-//		return true;
-//
-//	}
-//	else {
-//		return false;
-//	}
-//}
+bool InputManager::GetKey(BYTE keyNumber)
+{
+	if (keys[keyNumber] != 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool InputManager::GetKeyDown(BYTE keyNumber) 
+{
+	if (preKeys[keyNumber] == 0 && keys[keyNumber] != 0)
+	{
+		return true;
+	}
+	return false;
+}

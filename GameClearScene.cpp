@@ -1,15 +1,29 @@
 #include "GameClearScene.h"
 
-void GameClearScene::Initialize()
+GameClearScene::GameClearScene()
 {
 
 }
 
+GameClearScene::~GameClearScene()
+{
+
+}
+
+void GameClearScene::Initialize()
+{
+	inputManager_ = InputManager::GetInstance();
+}
+
 void GameClearScene::Update()
 {
-	ImGui::Begin("SceneNum");
-	ImGui::Text("Clear : SceneNum %d", sceneNum);
-	ImGui::InputInt("SceneNum", &sceneNum);
+	if (inputManager_->GetKeyDown(DIK_RETURN))
+	{
+		sceneNum = 0;
+	}
+
+	ImGui::Begin("ClearScene");
+	ImGui::Text("ENTER : TITLESCENE");
 	ImGui::End();
 }
 

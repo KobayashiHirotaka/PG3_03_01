@@ -1,4 +1,4 @@
-#include "SceneManager.h"
+﻿#include "SceneManager.h"
 
 const char kWindowTitle[] = "LE2A_10_コバヤシヒロタカ_タイトル";
 
@@ -14,34 +14,38 @@ void SceneManager::Initialize()
 	// ライブラリの初期化
 	Novice::Initialize(kWindowTitle, 1280, 720);
 
+	inputManager_ = InputManager::GetInstance();
+
 	state[TITLE] = std::make_unique<GameTitleScene>();
 	state[PLAY] = std::make_unique<GameStageScene>();
 	state[CLEAR] = std::make_unique<GameClearScene>();
-	state[PLAY]->Initialize();
+	state[TITLE]->Initialize();
 
-	IScene::sceneNum = TITLE;
+	currentSceneNum_ = TITLE;
 }
 
 void SceneManager::Update()
 {
-	// キー入力結果を受け取る箱
-	char keys[256] = { 0 };
-	char preKeys[256] = { 0 };
-
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
 		// フレームの開始
 		Novice::BeginFrame();
 
-		// キー入力を受け取る
-		memcpy(preKeys, keys, 256);
-		Novice::GetHitKeyStateAll(keys);
-
 		///
 		/// ↓更新処理ここから
 		///
 
-		state[GameTitleScene::sceneNum]->Update();
+		inputManager_->Update();
+
+		prevSceneNum_ = currentSceneNum_;
+		currentSceneNum_ = state[currentSceneNum_]->GetSceneNum();
+
+		if (prevSceneNum_ != currentSceneNum_)
+		{
+			state[currentSceneNum_]->Initialize();
+		}
+
+		state[currentSceneNum_]->Update();
 
 		///
 		/// ↑更新処理ここまで
@@ -51,7 +55,7 @@ void SceneManager::Update()
 		/// ↓描画処理ここから
 		///
 
-		state[GameTitleScene::sceneNum]->Draw();
+		state[currentSceneNum_]->Draw();
 
 		///
 		/// ↑描画処理ここまで
@@ -61,7 +65,7 @@ void SceneManager::Update()
 		Novice::EndFrame();
 
 		// ESCキーが押されたらループを抜ける
-		if (preKeys[DIK_ESCAPE] == 0 && keys[DIK_ESCAPE] != 0) {
+		if (inputManager_->GetKey(DIK_ESCAPE)) {
 			break;
 		}
 	}

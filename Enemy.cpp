@@ -2,22 +2,22 @@
 
 void Enemy::Initialize()
 {
-	posX_ = 640;
-	posY_ = 160;
+	pos_.x = 640.0f;
+	pos_.y = 160.0f;
 	radius_ = 50;
 	speed_ = 5;
 }
 
 void Enemy::Update()
 {
-	posX_ += speed_;
+	pos_.x += speed_;
 
-	if (posX_ > 1225)
+	if (pos_.x > 1225.0f)
 	{
 		speed_ *= -1;
 	}
 
-	if (posX_ < 55)
+	if (pos_.x < 55.0f)
 	{
 		speed_ *= -1;
 	}
@@ -26,6 +26,6 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
-	Novice::DrawEllipse(posX_, posY_, radius_, radius_, 0.0f, WHITE, kFillModeSolid);
+	Novice::DrawEllipse((int)pos_.x, (int)pos_.y, radius_, radius_, 0.0f, RED, kFillModeSolid);
 }
 
