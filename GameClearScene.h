@@ -1,7 +1,6 @@
 #pragma once
 #include "IScene.h"
 #include "ImGuiManager.h"
-#include "InputManager.h"
 
 class GameClearScene : public IScene
 {
@@ -13,5 +12,4 @@ public:
 	void Draw()override;
 
 private:
-	InputManager* inputManager_ = nullptr;
 };

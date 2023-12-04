@@ -3,7 +3,6 @@
 #include <memory>
 #include <list>
 #include "Vector2.h"
-#include "InputManager.h"
 #include "PlayerBullet.h"
 
 class Player
@@ -21,8 +20,6 @@ public:
 	const std::list<std::unique_ptr<PlayerBullet>>& GetBullets() { return bullets_; }
 
 private:
-	InputManager* inputManager_ = nullptr;
-
 	Vector2 pos_;
 	int radius_;
 	int speed_;

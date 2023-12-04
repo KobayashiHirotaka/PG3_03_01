@@ -12,7 +12,7 @@ GameTitleScene::~GameTitleScene()
 
 void GameTitleScene::Initialize()
 {
-	inputManager_ = InputManager::GetInstance();
+	
 }
 
 void GameTitleScene::Update()

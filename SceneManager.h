@@ -1,8 +1,7 @@
-﻿#pragma once
+#pragma once
 #include <Novice.h>
 #include <memory>
 #include "ImGuiManager.h"
-#include "InputManager.h"
 #include "IScene.h"
 #include "GameTitleScene.h"
 #include "GameStageScene.h"
@@ -29,8 +28,6 @@ public:
 	};
 
 private:
-	InputManager* inputManager_ = nullptr;
-
 	std::unique_ptr<IScene>state[3];
 	int currentSceneNum_;
 	int prevSceneNum_;

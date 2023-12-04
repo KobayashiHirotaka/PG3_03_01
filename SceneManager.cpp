@@ -14,8 +14,6 @@ void SceneManager::Initialize()
 	// ライブラリの初期化
 	Novice::Initialize(kWindowTitle, 1280, 720);
 
-	inputManager_ = InputManager::GetInstance();
-
 	state[TITLE] = std::make_unique<GameTitleScene>();
 	state[PLAY] = std::make_unique<GameStageScene>();
 	state[CLEAR] = std::make_unique<GameClearScene>();
@@ -34,8 +32,6 @@ void SceneManager::Update()
 		///
 		/// ↓更新処理ここから
 		///
-
-		inputManager_->Update();
 
 		prevSceneNum_ = currentSceneNum_;
 		currentSceneNum_ = state[currentSceneNum_]->GetSceneNum();
@@ -65,7 +61,7 @@ void SceneManager::Update()
 		Novice::EndFrame();
 
 		// ESCキーが押されたらループを抜ける
-		if (inputManager_->GetKey(DIK_ESCAPE)) {
+		if (Novice::CheckHitKey(DIK_ESCAPE)) {
 			break;
 		}
 	}
