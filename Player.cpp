@@ -25,3 +25,13 @@ void Player::Draw()
 {
 	Novice::DrawEllipse((int)pos_.x, (int)pos_.y, radius_, radius_, 0.0f, WHITE, kFillModeSolid);
 }
+
+void Player::MoveLeft() 
+{
+	pos_.x -= speed_;
+}
+
+void Player::MoveRight()
+{
+	pos_.x += speed_;
+}

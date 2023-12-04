@@ -13,8 +13,9 @@ public:
 
 	void Draw();
 
-	Vector2 GetPos() { return pos_; }
-	int GetRadius() { return radius_; }
+	void MoveRight();
+
+	void MoveLeft();
 
 private:
 	Vector2 pos_;
