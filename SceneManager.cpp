@@ -1,4 +1,4 @@
-﻿#include "SceneManager.h"
+#include "SceneManager.h"
 
 const char kWindowTitle[] = "LE2A_10_コバヤシヒロタカ_タイトル";
 
