@@ -14,15 +14,11 @@ void GameStageScene::Initialize()
 {
 	player_= std::make_unique<Player>();
 	player_->Initialize();
-
-	enemy_ = std::make_unique<Enemy>();
-	enemy_->Initialize();
 }
 
 void GameStageScene::Update()
 {
 	player_->Update();
-	enemy_->Update();
 
 	ImGui::Begin("STAGESCENE");
 	ImGui::Text("AD : Move");
@@ -33,6 +29,5 @@ void GameStageScene::Update()
 void GameStageScene::Draw()
 {
 	player_->Draw();
-	enemy_->Draw();
 }
 
